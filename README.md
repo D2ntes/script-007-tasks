@@ -1,4 +1,4 @@
 
-# File server project
+# File Server project
 
-Author is Maxim Suslov.
+Author is Maxx.
