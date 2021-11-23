@@ -1,4 +1,4 @@
 
 # File Server project
 
-Author is Maxx.
+Author is Nikita Gruzdev.
