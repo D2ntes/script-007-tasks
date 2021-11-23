@@ -1,4 +1,4 @@
 
-# <project name> project
+# PROJECT_NAME project
 
-Author is <author name>.
+Author is AUTHOR_NAME.
