@@ -7,7 +7,7 @@ import shutil
 ERROR_INVALID_NAME = 123
 
 
-def change_dir(path: str = None, autocreate: bool = True) -> None:
+def change_dir(path: str = "", autocreate: bool = True) -> None:
     """Change current directory of app.
 
     Args:
@@ -20,6 +20,9 @@ def change_dir(path: str = None, autocreate: bool = True) -> None:
     Returns:
         Path of current directory
     """
+
+    path = os.path.join(os.getcwd(), path)
+
     if not path:
         return os.getcwd()
     if not _check_path(path):
@@ -77,10 +80,13 @@ def get_file_data(filename: str) -> dict:
         ValueError: if filename is invalid.
     """
     path = os.path.join(os.getcwd(), filename)
+
     if not _check_path(path):
         raise ValueError(f'Filename "{filename}" is invalid')
+
     if not os.path.exists(path):
-        raise ValueError(f'Filename "{filename}" does not exist')
+        raise RuntimeError(f'Filename "{filename}" does not exist')
+
     with open(path, 'rb') as file:
         return {
                 'name': filename,
@@ -150,6 +156,10 @@ def delete_file(filename: str) -> None:
     """
 
     path = os.path.join(os.getcwd(), filename)
+
+    if not _check_path(path):
+        raise ValueError(f'Filename "{filename}" is invalid')
+
     if not os.path.exists(path):
         raise RuntimeError('File {} does not exist'.format(filename))
 
@@ -157,6 +167,7 @@ def delete_file(filename: str) -> None:
         shutil.rmtree(path)
     else:
         os.remove(path)
+    return True
 
 
 def _check_path(path: str) -> bool:
@@ -190,10 +201,11 @@ def _check_path(path: str) -> bool:
 
 
 if __name__ == '__main__':
-    print(os.getcwd())
-    print(get_files())
-    print(os.getcwd())
-    print(create_file('sdfs1.txt', 'sed9869fs', overwrite=True))
-    delete_file('1.txt')
+    create_file("test_for_delete.txt", overwrite=True)
+    #print(change_dir('test'))
+    # print(get_files())
+    # print(os.getcwd())
+    # print(create_file('sdfs1.txt', 'sed9869fs', overwrite=True))
+    # delete_file('1.txt')
 
 

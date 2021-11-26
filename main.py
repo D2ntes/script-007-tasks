@@ -13,7 +13,7 @@ def main():
     -h --help - help.
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument('-d', '--dir', default=os.path.join(os.getcwd(), 'data'), type=str,
+    parser.add_argument('-d', '--dir', default=os.path.join(os.getcwd(), 'tests'), type=str,
                         help="working directory (default: 'data')")
 
     params = parser.parse_args()
