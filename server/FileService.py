@@ -167,7 +167,6 @@ def delete_file(filename: str) -> None:
         shutil.rmtree(path)
     else:
         os.remove(path)
-    return True
 
 
 def _check_path(path: str) -> bool:
@@ -198,14 +197,3 @@ def _check_path(path: str) -> bool:
         return False
     else:
         return True
-
-
-if __name__ == '__main__':
-    create_file("test_for_delete.txt", overwrite=True)
-    #print(change_dir('test'))
-    # print(get_files())
-    # print(os.getcwd())
-    # print(create_file('sdfs1.txt', 'sed9869fs', overwrite=True))
-    # delete_file('1.txt')
-
-

@@ -16,8 +16,9 @@ def file_delete(request):
 
 
 # change dir
-def test_change_dir_autocreate_true(path="test"):
-    start_dir = os.path.join(os.getcwd(), "test")
+def test_change_dir_autocreate_true():
+    path = "test"
+    start_dir = os.path.join(os.getcwd(), path)
     FileService.change_dir(path=path, autocreate=True)
     assert os.getcwd() == start_dir
 
@@ -43,20 +44,18 @@ def test_create_file_value_error(filename=os.path.join(os.getcwd(), "filename_in
     with pytest.raises(ValueError):
         FileService.create_file(filename=filename, content="test content")
 
+
 @pytest.mark.usefixtures('file_delete')
 def test_create_file_all_ok(filename=os.path.join(os.getcwd(), "test_ok.txt")):
     stat = FileService.create_file(filename=filename, content="test content", overwrite=True)
-    assert isinstance(stat, dict)
-    assert "name" in stat
-    assert "content" in stat
-    assert "create_date" in stat
-    assert "edit_date" in stat
-    assert "size" in stat
+    assert_dict(stat)
+
 
 @pytest.mark.usefixtures('file_delete')
 def test_create_file_overwrite_false(filename=os.path.join(os.getcwd(), "test_ok.txt")):
     with pytest.raises(RuntimeError):
         FileService.create_file(filename=filename, content="test content", overwrite=False)
+
 
 
 # get file data
@@ -72,12 +71,7 @@ def test_get_file_data_value_error(filename=os.path.join(os.getcwd(), "filename_
 
 def test_get_file_data_all_ok(filename=os.path.join(os.getcwd(), "test_ok.txt")):
     stat = FileService.get_file_data(filename=filename)
-    assert isinstance(stat, dict)
-    assert "name" in stat
-    assert "content" in stat
-    assert "create_date" in stat
-    assert "edit_date" in stat
-    assert "size" in stat
+    assert_dict(stat)
 
 
 # delete file
@@ -93,4 +87,14 @@ def test_delete_file_value_error(filename=os.path.join(os.getcwd(), "te?st.txt")
 
 @pytest.mark.usefixtures('file_creation')
 def test_delete_file_all_ok(filename="test_for_delete.txt"):
-    assert FileService.delete_file(filename=filename)
+    FileService.delete_file(filename=filename)
+    assert not os.path.exists(filename)
+
+
+def assert_dict(stat):
+    assert isinstance(stat, dict)
+    assert "name" in stat
+    assert "content" in stat
+    assert "create_date" in stat
+    assert "edit_date" in stat
+    assert "size" in stat
