@@ -6,8 +6,6 @@ import sys
 import server.FileService as fs
 
 
-
-
 def main():
     """Entry point of app.
 
@@ -24,7 +22,7 @@ def main():
     params = parser.parse_args()
 
     work_dir = params.dir if os.path.isabs(params.dir) else os.path.join(os.getcwd(), params.dir)
-    FileService.change_dir(work_dir)
+    fs.change_dir(work_dir)
 
 
 if __name__ == '__main__':
