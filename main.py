@@ -1,25 +1,37 @@
 #!/usr/bin/env python3
 import argparse
 import os
+import sys
 
 import server.FileService as fs
 
 
+
+
 def main():
     """Entry point of app.
+
     Get and parse command line parameters and configure web app.
+
     Command line options:
     -d --dir  - working directory (absolute or relative path, default: current_app_folder/data).
     -h --help - help.
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument('-d', '--dir', default=os.path.join(os.getcwd(), 'tests'), type=str,
-                        help="working directory (default: 'data')")
 
+    parser.add_argument('-d', '--dir', default='data', type=str,
+                        help="working directory (default: 'data')")
     params = parser.parse_args()
 
-    fs.change_dir(params.dir)
+    work_dir = params.dir if os.path.isabs(params.dir) else os.path.join(os.getcwd(), params.dir)
+    FileService.change_dir(work_dir)
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit('\nERROR: Interrupted by user')
+    except BaseException as err:
+        print(f'ERROR: Something goes wrong:\n{err}')
+        sys.exit(1)

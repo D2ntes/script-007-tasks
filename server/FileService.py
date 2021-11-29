@@ -4,6 +4,7 @@ import errno
 import sys
 import shutil
 
+
 ERROR_INVALID_NAME = 123
 
 
@@ -20,8 +21,6 @@ def change_dir(path: str = "", autocreate: bool = True) -> None:
     Returns:
         Path of current directory
     """
-
-    path = os.path.join(os.getcwd(), path)
 
     if not path:
         return os.getcwd()
@@ -46,6 +45,7 @@ def get_files() -> list:
         - edit_date (datetime): date of last file modification.
         - size (int): size of file in bytes.
     """
+
     file_list = []
     filepath_list = os.listdir(os.getcwd())
     for file in filepath_list:
@@ -59,6 +59,7 @@ def get_files() -> list:
         except FileNotFoundError as err:
             file_list.append([file, None, None, None])
     return file_list
+
 
 
 def get_file_data(filename: str) -> dict:
@@ -81,8 +82,6 @@ def get_file_data(filename: str) -> dict:
     """
     path = os.path.join(os.getcwd(), filename)
 
-    if not _check_path(path):
-        raise ValueError(f'Filename "{filename}" is invalid')
 
     if not os.path.exists(path):
         raise RuntimeError(f'Filename "{filename}" does not exist')
