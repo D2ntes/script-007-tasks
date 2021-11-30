@@ -45,7 +45,10 @@ $ git cherry-pick trainer/BRANCH_NAME
 ```console
 $ git checkout -b 01_prepare_env master
 $ git fetch trainer
-$ git merge trainer/01_prepare_env
+$ git cherry-pick trainer/01_prepare_env
+$ git status
+# исправление конфликтов, если есть и далее
+$ git commit
 ```
 
 Теперь в папке `tasks` появится файл с очередным заданием.
