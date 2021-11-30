@@ -4,6 +4,7 @@ import errno
 import sys
 import shutil
 
+import logging
 
 ERROR_INVALID_NAME = 123
 
@@ -61,7 +62,6 @@ def get_files() -> list:
     return file_list
 
 
-
 def get_file_data(filename: str) -> dict:
     """Get full info about file.
 
@@ -81,9 +81,10 @@ def get_file_data(filename: str) -> dict:
         ValueError: if filename is invalid.
     """
     path = os.path.join(os.getcwd(), filename)
-
+    logging.debug(f'Current path: {path}')
 
     if not os.path.exists(path):
+        logging.error(f'Filename "{filename}" does not exist')
         raise RuntimeError(f'Filename "{filename}" does not exist')
 
     with open(path, 'rb') as file:

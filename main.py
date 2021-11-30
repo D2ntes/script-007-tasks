@@ -2,8 +2,12 @@
 import argparse
 import os
 import sys
+import logging
 
-import server.FileService as fs
+import server.FileService as FS
+import utils.logger_util as logger_util
+import utils.params_parse as params_parse
+from utils.Config import Config
 
 
 def main():
@@ -13,16 +17,16 @@ def main():
 
     Command line options:
     -d --dir  - working directory (absolute or relative path, default: current_app_folder/data).
+    -l --log_level - log level to console (default is warning)
+    -f --log_file - name of log file
+    -p --port - port
     -h --help - help.
     """
-    parser = argparse.ArgumentParser()
 
-    parser.add_argument('-d', '--dir', default='data', type=str,
-                        help="working directory (default: 'data')")
-    params = parser.parse_args()
-
-    work_dir = params.dir if os.path.isabs(params.dir) else os.path.join(os.getcwd(), params.dir)
-    fs.change_dir(work_dir)
+    params = params_parse.get_params()
+    config = Config(params)
+    logger_util.get_logger(level=config.data.get('log_level'), filename=config.data.get('log_file'))
+    logging.info(f"Start directory: {FS.change_dir(config.data.get('dir'))}")
 
 
 if __name__ == '__main__':
