@@ -1,6 +1,6 @@
 import os
 import configparser
-from utils.singleton import singleton
+from utils.Singleton import singleton
 
 DEFAULT_CONFIG = "config.ini"
 APP_NAME = "FILE_SERVER"

@@ -12,7 +12,7 @@ def get_params():
     parser.add_argument('-l', '--log_level', default='warning', choices=['debug', 'info', 'warning', 'error'],
                         help='log level to console (default is warning)')
     parser.add_argument('-f', '--log_file', type=str, help='name of log file')
-    parser.add_argument('-p', '--port', type=int, help='port', default=8080)
+    parser.add_argument('-p', '--port', type=int, help='port')
     params = parser.parse_args()
 
     for key in params_keys:
